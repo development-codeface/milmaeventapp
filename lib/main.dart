@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:milma_group/provider/commonviewmodel.dart';
-import 'package:milma_group/screens/livetrack.dart';
 import 'package:milma_group/screens/splash_screen.dart';
 import 'package:milma_group/session/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    await Store.init(); // <-- make sure this initializes before ViewModel
+  await Store.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -16,8 +15,6 @@ Future<void> main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
-    // Ensure shared preferences / session ready
-
 
   runApp(const MyApp());
 }
@@ -25,7 +22,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

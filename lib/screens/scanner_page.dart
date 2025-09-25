@@ -24,7 +24,7 @@ class _ScannerPageState extends State<ScannerPage> {
 
       String scannedValue = barcodes.first.rawValue ?? "No data found";
 
-      Navigator.pop(context, scannedValue); // Pass result back
+      Navigator.pop(context, scannedValue);
     }
   }
 
@@ -36,7 +36,7 @@ class _ScannerPageState extends State<ScannerPage> {
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         automaticallyImplyLeading: false,
-centerTitle: true,
+        centerTitle: true,
         title: const Text(
           "SCAN",
           style: TextStyle(
@@ -63,17 +63,17 @@ centerTitle: true,
             },
             borderRadius: BorderRadius.circular(100),
             child: Container(
-              padding: const EdgeInsets.all(4), // spacing inside the box
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.white, // background color inside the box
-                border: Border.all(color: Colors.grey, width: 1), // grey border
-                borderRadius: BorderRadius.circular(8), // curved corners
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 Icons.arrow_back_ios_rounded,
                 size: 17,
                 weight: 5,
-                color: primaryColor, // icon color
+                color: primaryColor,
               ),
             ),
           ),

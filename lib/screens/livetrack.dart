@@ -7,7 +7,6 @@ import 'package:milma_group/const.dart';
 import 'package:milma_group/model/reportmodel.dart';
 import 'package:milma_group/webservice/webservice.dart';
 import 'package:shimmer/shimmer.dart';
-import 'table_screen.dart';
 
 class Livetrack extends StatefulWidget {
   final int eventid;
@@ -36,7 +35,7 @@ class _LivetrackState extends State<Livetrack> {
     super.initState();
     _loadInitialData();
     _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      _loadReport(); // your API call
+      _loadReport();
     });
   }
 
@@ -49,7 +48,6 @@ class _LivetrackState extends State<Livetrack> {
 
   void _scrollToCurrentTime() {
     if (reportData.lineChart.xAxis.isEmpty) {
-      print("xAxis is empty");
       return;
     }
 
@@ -60,12 +58,9 @@ class _LivetrackState extends State<Livetrack> {
 
     print("Current time: $currentHour:$currentMinute");
 
-    // Use backend-provided times directly
     final xAxis = reportData.lineChart.xAxis;
-
-    // 🔹 Find closest index in xAxis
     int closestIndex = -1;
-    int smallestDifference = 1440; // max minutes in a day
+    int smallestDifference = 1440;
 
     for (int i = 0; i < xAxis.length; i++) {
       final timeStr = xAxis[i];
@@ -82,8 +77,6 @@ class _LivetrackState extends State<Livetrack> {
         print("Error parsing time: $timeStr, error: $e");
       }
     }
-
-    // 🔹 If found a matching/closest index → scroll
     if (closestIndex != -1) {
       final double targetPosition = closestIndex * 60.0;
 
@@ -100,14 +93,8 @@ class _LivetrackState extends State<Livetrack> {
           curve: Curves.easeInOut,
         );
       });
-
-      print(
-        "Closest index: $closestIndex, time: ${xAxis[closestIndex]}, scrollTo: ${targetPosition - centerOffset}",
-      );
     } else {
-      // 🔹 No relevant value → scroll to start
       _scrollController.jumpTo(0);
-      print("No matching time found → start from beginning");
     }
   }
 
@@ -151,7 +138,6 @@ class _LivetrackState extends State<Livetrack> {
         reportData = ReportData.fromJson(report);
       });
 
-      // Scroll to current time after data is loaded and UI is updated
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _scrollToCurrentTime();
       });
@@ -169,13 +155,11 @@ class _LivetrackState extends State<Livetrack> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Scroll after the build is complete and data is available
     if (_shouldScrollToCurrentTime &&
         !isLoading &&
         reportData.lineChart.xAxis.isNotEmpty) {
       _shouldScrollToCurrentTime = false;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Add a small delay to ensure the chart is fully rendered
         Future.delayed(const Duration(milliseconds: 300), () {
           _scrollToCurrentTime();
         });
@@ -303,9 +287,7 @@ class _LivetrackState extends State<Livetrack> {
                   helperStyle: TextStyle(letterSpacing: 0),
 
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      20,
-                    ), // ⬅️ More curve here
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 items: districtList.map((district) {
@@ -316,7 +298,6 @@ class _LivetrackState extends State<Livetrack> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() => selectedDistrict = value);
-                  //  _loadReport();
                 },
               ),
             ),
@@ -330,9 +311,7 @@ class _LivetrackState extends State<Livetrack> {
                 decoration: InputDecoration(
                   labelText: 'P&L',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      20,
-                    ), // ⬅️ More curve here
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 items: paList.map((pa) {
@@ -340,26 +319,25 @@ class _LivetrackState extends State<Livetrack> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() => selectedPA = value);
-                  //  _loadReport();
                 },
               ),
             ),
           ),
-          //  const SizedBox(height: 5),
+
           Align(
             alignment: Alignment.topRight,
             child: SizedBox(
               width: 100,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:  Color(0xFF2b68e8),
+                  backgroundColor: Color(0xFF2b68e8),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                onPressed: _loadReport, // ✅ call API only when button clicked
+                onPressed: _loadReport,
                 child: const Text(
                   "Filter",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -391,7 +369,6 @@ class _LivetrackState extends State<Livetrack> {
               children: List.generate(reportData.barChart.titles.length, (
                 index,
               ) {
-                /// Color(0xFF9A221F);fe634e. 33c25b
                 final colors = [
                   Color(0xFF214bb8),
                   Color(0xFFfe634e),
@@ -400,8 +377,7 @@ class _LivetrackState extends State<Livetrack> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 12.0),
                   child: _buildLegendDot(
-                    colors[index %
-                        colors.length], // cycle colors if more than 3
+                    colors[index % colors.length],
                     reportData.barChart.titles[index],
                     reportData.barChart.values[index].toStringAsFixed(0),
                   ),
@@ -411,7 +387,6 @@ class _LivetrackState extends State<Livetrack> {
 
             const SizedBox(height: 16),
 
-            // ✅ Legend row
             const SizedBox(height: 25),
             SizedBox(
               height: 350,
@@ -423,8 +398,7 @@ class _LivetrackState extends State<Livetrack> {
                       tooltipPadding: EdgeInsets.only(bottom: 10),
                       tooltipMargin: 0,
                       tooltipRoundedRadius: 0,
-                      getTooltipColor: (group) => Colors
-                          .transparent, 
+                      getTooltipColor: (group) => Colors.transparent,
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
                         return BarTooltipItem(
                           rod.toY.toInt() == 0
@@ -472,16 +446,12 @@ class _LivetrackState extends State<Livetrack> {
                           final index = value.toInt();
                           if (index >= 0 &&
                               index < reportData.barChart.titles.length) {
-                            // Add \n or wrap text if too long
                             final title = reportData.barChart.titles[index];
                             return Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
                                 title.contains(" ")
-                                    ? title.replaceFirst(
-                                        " ",
-                                        "\n",
-                                      ) // 👈 split into 2 lines
+                                    ? title.replaceFirst(" ", "\n")
                                     : title,
                                 style: const TextStyle(fontSize: 10),
                                 textAlign: TextAlign.center,
@@ -499,7 +469,7 @@ class _LivetrackState extends State<Livetrack> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: 100,
-                        reservedSize: 30, // ✅ prevents 1000 wrapping
+                        reservedSize: 30,
                         getTitlesWidget: (value, meta) {
                           return Text(
                             value.toInt().toString(),
@@ -537,7 +507,6 @@ class _LivetrackState extends State<Livetrack> {
     );
   }
 
-  // ✅ Helper widget for legend dot
   Widget _buildLegendDot(Color color, String label, String value) {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -567,7 +536,6 @@ class _LivetrackState extends State<Livetrack> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ✅ Legend row with circle + name + percentage
             Wrap(
               children: List.generate(reportData.pieChart.titles.length, (
                 index,
@@ -588,14 +556,12 @@ class _LivetrackState extends State<Livetrack> {
             ),
             const SizedBox(height: 16),
 
-            // ✅ Pie Chart
             SizedBox(
               height: 300,
               child: PieChart(
                 PieChartData(
                   sections: total == 0
                       ? [
-                          // show full circle in primary color
                           PieChartSectionData(
                             value: 100,
                             title: '',
@@ -635,24 +601,17 @@ class _LivetrackState extends State<Livetrack> {
       return _buildEmptyChart('Line Chart');
     }
 
-    // Current time
     final now = DateTime.now();
     final currentHour = now.hour;
     final currentMinute = now.minute;
     final currentTotalMinutes = currentHour * 60 + currentMinute;
 
-    print(
-      "Current time: $currentHour:$currentMinute → $currentTotalMinutes minutes",
-    );
-
-    // Prepare data
     final xAxis = reportData.lineChart.xAxis;
     final yAxis = reportData.lineChart.yAxis.map((e) => e.toDouble()).toList();
 
-    int closestIndex = 0; // future index
-    int lastPastIndex = 0; // past index we want
+    int closestIndex = 0;
+    int lastPastIndex = 0;
     int smallestDifference = 1440;
-    bool foundFutureTime = false;
     List<int> validIndices = [];
 
     for (int i = 0; i < xAxis.length; i++) {
@@ -665,33 +624,22 @@ class _LivetrackState extends State<Livetrack> {
         validIndices.add(i);
 
         if (diff <= 0) {
-          // This is a past time → keep track of the closest one
           lastPastIndex = i;
-          print("Past candidate: $timeStr → index $i, diff: $diff");
         }
 
-        // Your existing future-finding logic (optional for scroll)
         if (diff >= 0 && diff.abs() < smallestDifference) {
           smallestDifference = diff.abs();
           closestIndex = i;
-          foundFutureTime = true;
-          print("Future time found: $timeStr → index $i, diff: $diff");
         }
       } catch (e) {
         print("Error parsing time: $timeStr, error: $e");
       }
     }
 
-    // Fallback: If no valid times were parsed, use first index
     if (validIndices.isEmpty) {
       closestIndex = 0;
-      print("No valid times parsed, using first index as fallback");
     }
 
-    print("Final closest index: $closestIndex, time: ${xAxis[closestIndex]}");
-    print("Total valid time slots: ${validIndices.length}");
-
-    // --- Rest of your chart building code remains the same ---
     double rawMaxY = yAxis.reduce((a, b) => a > b ? a : b);
 
     double maxY;
@@ -708,13 +656,11 @@ class _LivetrackState extends State<Livetrack> {
       interval = 10;
     }
 
-    // Chart dimensions
-    final chartHeight = 290.0; // Height of the chart area
-    final chartTopPadding = 8.0; // Top padding of the chart
-    final dotRadius = 3.0; // Radius of the dots
-    final tooltipOffset = 8.0; // Offset above the dot
+    final chartHeight = 290.0;
+    final chartTopPadding = 8.0;
+    final dotRadius = 3.0;
+    final tooltipOffset = 8.0;
 
-    // --- Auto-scroll logic ---
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         final viewportWidth = MediaQuery.of(context).size.width;
@@ -724,8 +670,6 @@ class _LivetrackState extends State<Livetrack> {
           0.0,
           _scrollController.position.maxScrollExtent,
         );
-
-        print("Scrolling to offset: $targetOffset (index: $closestIndex)");
 
         Future.delayed(const Duration(milliseconds: 300), () {
           _scrollController.animateTo(
@@ -751,7 +695,6 @@ class _LivetrackState extends State<Livetrack> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Fixed Y-axis
                   SizedBox(
                     width: 40,
                     child: Padding(
@@ -800,7 +743,7 @@ class _LivetrackState extends State<Livetrack> {
                       ),
                     ),
                   ),
-                  // Scrollable chart
+
                   Expanded(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -811,7 +754,6 @@ class _LivetrackState extends State<Livetrack> {
                           width: xAxis.length * 60.0,
                           child: Stack(
                             children: [
-                              // Chart
                               LineChart(
                                 LineChartData(
                                   minY: 0,
@@ -831,9 +773,7 @@ class _LivetrackState extends State<Livetrack> {
                                       color: Colors.blue,
                                     ),
                                   ],
-                                  lineTouchData: LineTouchData(
-                                    enabled: false, // Disable default touch
-                                  ),
+                                  lineTouchData: LineTouchData(enabled: false),
                                   titlesData: FlTitlesData(
                                     bottomTitles: AxisTitles(
                                       sideTitles: SideTitles(
@@ -917,18 +857,14 @@ class _LivetrackState extends State<Livetrack> {
                                 duration: const Duration(milliseconds: 1000),
                                 curve: Curves.easeInOutCubic,
                               ),
-                              // Custom tooltips - only for non-zero values
+
                               ...xAxis.asMap().entries.map((entry) {
                                 final index = entry.key;
                                 final value = yAxis[index];
-
-                                // Skip zero values
                                 if (value == 0) return const SizedBox.shrink();
 
-                                // Calculate position for each tooltip
-                                // xPosition: index * spacing + left padding
                                 final xPosition = index * 60.0 + 30;
-                                // yPosition: chartTopPadding + (chartHeight - (value/maxY * chartHeight)) - tooltipOffset
+
                                 final yPosition =
                                     chartTopPadding +
                                     (chartHeight -
@@ -1022,7 +958,7 @@ class _LivetrackState extends State<Livetrack> {
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,
               child: Container(
-                height: index == 2 ? 300 : 200, // simulate different charts
+                height: index == 2 ? 300 : 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,

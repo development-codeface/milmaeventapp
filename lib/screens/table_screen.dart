@@ -14,43 +14,43 @@ class TableScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-       backgroundColor: Colors.white,
-    
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
-          backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: const Text("Participants List",style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,)),
-                        leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                borderRadius: BorderRadius.circular(100),
-                child:Container(
-                  padding: const EdgeInsets.all(4), // spacing inside the box
-                  decoration: BoxDecoration(
-                    color: Colors.white, // background color inside the box
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ), // grey border
-                    borderRadius: BorderRadius.circular(8), // curved corners
-                  ),
-                  child: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    size: 17,
-                    weight: 5,
-                    color: primaryColor, // icon color
-                  ),
-                ),
+        title: const Text(
+          "Participants List",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            borderRadius: BorderRadius.circular(100),
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                size: 17,
+                weight: 5,
+                color: primaryColor,
               ),
             ),
-        //  backgroundColor: Colors.blue,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),

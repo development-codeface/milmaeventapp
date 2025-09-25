@@ -4,15 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final String baseurl = "https://milmasociety.cfdev.in/api/";
-final String imageurl = "https://sadique.eloaa.com/uploads/";
-
-
-
 final Color primaryColor = Color(0xFF9A221F);
- const Duration refreshInterval = Duration(minutes: 1);
+const Duration refreshInterval = Duration(minutes: 1);
 
-
- Future<bool> checkInternetConnection() async {
+Future<bool> checkInternetConnection() async {
   try {
     final result = await InternetAddress.lookup('google.com');
     return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
@@ -44,7 +39,6 @@ Future<void> openDialer(String phoneNumber) async {
 }
 
 Future<void> openWhatsApp(String phoneNumber, {String message = ''}) async {
-  // Use country code for WhatsApp, example: +91 for India
   final Uri uri = Uri.parse(
     "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}",
   );
@@ -79,7 +73,6 @@ void snack(String msg, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
-
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({super.key});
 
@@ -89,11 +82,7 @@ class NoInternetWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            "assets/images/wifi.png",
-            width: 150,
-            height: 150,
-          ),
+          Image.asset("assets/images/wifi.png", width: 150, height: 150),
           const SizedBox(height: 16),
           const Text(
             "No Internet Available",

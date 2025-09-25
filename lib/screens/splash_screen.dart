@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:milma_group/screens/event_list.dart';
-import 'package:milma_group/screens/homepage.dart';
 import 'package:milma_group/screens/login_page.dart';
 import 'package:milma_group/session/shared_preferences.dart';
 
@@ -54,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: const BoxDecoration(color: Colors.white),
         child: Center(
           child: Image.asset(
-            "assets/images/logo.png", // Replace with your logo path
+            "assets/images/logo.png", 
             width: MediaQuery.of(context).size.width / 2,
             height: MediaQuery.of(context).size.width / 2,
           ),

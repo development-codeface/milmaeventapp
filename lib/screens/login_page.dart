@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:milma_group/const.dart';
 import 'package:milma_group/provider/commonviewmodel.dart';
 import 'package:milma_group/screens/event_list.dart';
-import 'package:milma_group/screens/homepage.dart';
 import 'package:milma_group/session/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -40,20 +37,25 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 60),
                 Image.asset("assets/images/logo.png", height: 150, width: 150),
                 const SizedBox(height: 150),
-        
+
                 const Text(
                   "SIGN IN TO CONTINUE",
-                  style: TextStyle(fontSize: 15, height: 1,letterSpacing: 0,fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 15,
+                    height: 1,
+                    letterSpacing: 0,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 40),
-        
+
                 TextFormField(
                   controller: _emailController,
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "ENTER YOUR EMAIL",
-                    
+
                     hintStyle: TextStyle(
                       letterSpacing: 0,
                       fontSize: 14,
@@ -71,7 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                     if (value == null || value.isEmpty) {
                       return "Please enter your email";
                     }
-                    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$');
+                    final emailRegex = RegExp(
+                      r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$',
+                    );
                     if (!emailRegex.hasMatch(value)) {
                       return "Enter a valid email";
                     }
@@ -79,16 +83,16 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 const SizedBox(height: 10),
-        
+
                 TextFormField(
                   controller: _passwordController,
                   cursorColor: Colors.black,
-                  obscureText: !_isPasswordVisible, // Toggle visibility here
+                  obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     hintText: "PASSWORD",
                     hintStyle: TextStyle(
                       fontSize: 14,
-                       letterSpacing: 0,
+                      letterSpacing: 0,
                       color: Colors.grey.shade500,
                     ),
                     border: OutlineInputBorder(
@@ -134,14 +138,17 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               final connected = await checkInternetConnection();
-        
+
                               if (connected == false) {
-                                snack("Please check your connectivity", context);
-        
+                                snack(
+                                  "Please check your connectivity",
+                                  context,
+                                );
+
                                 return;
                               }
                               setState(() => load = true);
-        
+
                               vm!
                                   .login(
                                     _emailController.text.trim(),
@@ -149,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                   )
                                   .then((value) {
                                     setState(() => load = false);
-        
+
                                     if (value['status'] == true) {
                                       Store.setEmail(
                                         _emailController.text.trim(),
@@ -158,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                       Store.setToken(
                                         vm!.responsedata?.accessToken ?? "",
                                       );
-        
+
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -189,9 +196,13 @@ class _LoginPageState extends State<LoginPage> {
                             backgroundColor: primaryColor,
                           ),
                           child: const Text(
-                            
                             "LOGIN",
-                            style: TextStyle(fontSize: 14, color: Colors.white, letterSpacing: 0,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              letterSpacing: 0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                 ),

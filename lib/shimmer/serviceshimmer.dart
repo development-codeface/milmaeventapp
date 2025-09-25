@@ -17,7 +17,6 @@ class DoctorShimmerPage extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left Column -> Profile Image + Ratings + Distance
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -35,10 +34,13 @@ class DoctorShimmerPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Rating shimmer
                       Row(
                         children: [
-                          Icon(Icons.star, size: 25, color: Colors.grey.shade300),
+                          Icon(
+                            Icons.star,
+                            size: 25,
+                            color: Colors.grey.shade300,
+                          ),
                           const SizedBox(width: 4),
                           Container(
                             width: 20,
@@ -48,11 +50,14 @@ class DoctorShimmerPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      // Distance shimmer
+
                       Row(
                         children: [
-                          Icon(Icons.location_on_rounded,
-                              size: 18, color: Colors.grey.shade300),
+                          Icon(
+                            Icons.location_on_rounded,
+                            size: 18,
+                            color: Colors.grey.shade300,
+                          ),
                           const SizedBox(width: 4),
                           Container(
                             width: 40,
@@ -68,14 +73,12 @@ class DoctorShimmerPage extends StatelessWidget {
             ),
             const SizedBox(width: 10),
 
-            // Right Column -> Text Details
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Doctor Name
                     Container(
                       height: 15,
                       width: 140,
@@ -83,7 +86,6 @@ class DoctorShimmerPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // Specialist
                     Container(
                       height: 12,
                       width: 100,
@@ -91,7 +93,6 @@ class DoctorShimmerPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // Opening Time Label
                     Container(
                       height: 12,
                       width: 120,
@@ -99,7 +100,6 @@ class DoctorShimmerPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
 
-                    // Opening Time Value
                     Container(
                       height: 12,
                       width: 100,
@@ -110,11 +110,13 @@ class DoctorShimmerPage extends StatelessWidget {
               ),
             ),
 
-            // Right Location Icon
             Align(
               alignment: Alignment.centerRight,
-              child: Icon(Icons.location_on_rounded,
-                  color: Colors.grey.shade300, size: 25),
+              child: Icon(
+                Icons.location_on_rounded,
+                color: Colors.grey.shade300,
+                size: 25,
+              ),
             ),
           ],
         ),
@@ -137,9 +139,4 @@ class DoctorShimmerPage extends StatelessWidget {
       },
     );
   }
-
-
-
-
-
 }

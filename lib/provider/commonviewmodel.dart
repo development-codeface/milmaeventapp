@@ -11,34 +11,30 @@ class CommonViewModel extends ChangeNotifier {
   String? eventError;
   String? insightError;
 
-   LoginResponse? responsedata;
+  LoginResponse? responsedata;
   late Map<String, dynamic> logresp;
 
   List<EventModel> eventlist = [];
 
-
   List<InsightModel> insightlist = [];
   List<InsightModel> filteredinsights = [];
 
-  // LOGIN
   Future<Map<String, dynamic>> login(String email, String password) async {
     loginload = true;
     notifyListeners();
 
     logresp = await Webservice().login(email, password);
-   // Only assign if the API gave valid data
-if (logresp['responsedata'] != null) {
-  responsedata = logresp['responsedata'];
-} else {
-  responsedata = null;
-}
+    if (logresp['responsedata'] != null) {
+      responsedata = logresp['responsedata'];
+    } else {
+      responsedata = null;
+    }
 
     loginload = false;
     notifyListeners();
     return logresp;
   }
 
-  // FETCH EVENTS
   Future<void> getallevents() async {
     try {
       isEventLoading = true;
@@ -47,7 +43,6 @@ if (logresp['responsedata'] != null) {
 
       final response = await Webservice().getallevents();
       eventlist = response['eventlistdata'];
-    
     } catch (e) {
       eventError = "Failed to load events";
     } finally {
@@ -56,8 +51,6 @@ if (logresp['responsedata'] != null) {
     }
   }
 
- 
-  // Insights data
   Future<void> getinsights(int id) async {
     try {
       isInsightLoading = true;
@@ -75,19 +68,17 @@ if (logresp['responsedata'] != null) {
     }
   }
 
-  // SEARCH INSIGHTS
   void searchinsights(String query) {
-  if (query.isEmpty) {
-    filteredinsights = List.from(insightlist);
-  } else {
-    final lowerQuery = query.toLowerCase();
-    filteredinsights = insightlist.where((e) {
-      final name = (e.name ?? '').toLowerCase();
-      final mobile = (e.mobile ?? '').toLowerCase();
-      return name.contains(lowerQuery) || mobile.contains(lowerQuery);
-    }).toList();
+    if (query.isEmpty) {
+      filteredinsights = List.from(insightlist);
+    } else {
+      final lowerQuery = query.toLowerCase();
+      filteredinsights = insightlist.where((e) {
+        final name = (e.name ?? '').toLowerCase();
+        final mobile = (e.mobile ?? '').toLowerCase();
+        return name.contains(lowerQuery) || mobile.contains(lowerQuery);
+      }).toList();
+    }
+    notifyListeners();
   }
-  notifyListeners();
-}
-
 }

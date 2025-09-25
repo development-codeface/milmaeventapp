@@ -1,19 +1,15 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:milma_group/const.dart';
 import 'package:milma_group/model/eventmodel.dart';
 import 'package:milma_group/screens/QRDetailsPage.dart';
 import 'package:milma_group/screens/allocation_list.dart';
 import 'package:milma_group/screens/livetrack.dart';
 import 'package:milma_group/screens/login_page.dart';
-import 'package:milma_group/screens/openscanner.dart';
 import 'package:milma_group/screens/scanner_page.dart';
 import 'package:milma_group/session/shared_preferences.dart';
-import 'package:milma_group/shimmer/squircle_clipper.dart';
 import 'package:provider/provider.dart';
 import '../../provider/commonviewmodel.dart';
 import '../shimmer/serviceshimmer.dart';
@@ -43,12 +39,9 @@ class _EventListScreenState extends State<EventListScreen> {
 
     if (result != null && mounted) {
       final scannedResult = result.toString();
-      log("scanned result----$scannedResult");
 
-      // Extract last part after last slash
       final qrCode = scannedResult.split("/").last;
 
-      // Navigate to QR Details Page
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QRDetailsPage(qrCode: qrCode)),
@@ -61,14 +54,12 @@ class _EventListScreenState extends State<EventListScreen> {
     super.initState();
     final vm = Provider.of<CommonViewModel>(context, listen: false);
 
-    // load events first
     _eventsFuture = vm.getallevents().then((_) {
       setState(() {
         eventlist = List.from(vm.eventlist);
         filteredEvents = List.from(vm.eventlist);
       });
 
-      // attach search listener after loading
       _searchController.addListener(_onSearchChanged);
     });
   }
@@ -172,7 +163,7 @@ class _EventListScreenState extends State<EventListScreen> {
               decoration: BoxDecoration(
                 border: Border.all(width: 1, color: Colors.transparent),
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(18), // 👈 curve corners
+                borderRadius: BorderRadius.circular(18),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -276,7 +267,6 @@ class _EventListScreenState extends State<EventListScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 🔹 Section with padding
                                 Padding(
                                   padding: const EdgeInsets.all(15),
                                   child: Column(
@@ -385,7 +375,6 @@ class _EventListScreenState extends State<EventListScreen> {
                                   ),
                                 ),
 
-                                // 🔹 Section WITHOUT padding
                                 Container(
                                   height: 80,
 
@@ -396,15 +385,14 @@ class _EventListScreenState extends State<EventListScreen> {
                                           decoration: BoxDecoration(
                                             color: Color(0xFF214bb8),
 
-                                            // background color
-                                            borderRadius: const BorderRadius.only(
-                                              bottomLeft: Radius.circular(
-                                                20,
-                                              ), // curve bottom left
-                                              //  bottomRight: Radius.circular(20),  // curve bottom right
-                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                  bottomLeft: Radius.circular(
+                                                    20,
+                                                  ),
+                                                ),
                                           ),
-                                          //  color: Colors.blue.shade100,
+
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -442,7 +430,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       Expanded(
                                         child: Container(
                                           color: Color(0xFFfe634e),
-                                          //   color: Colors.green.shade100,
+
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -469,15 +457,14 @@ class _EventListScreenState extends State<EventListScreen> {
                                       ),
                                       Expanded(
                                         child: Container(
-                                          //color: Colors.orange.shade100,
                                           decoration: BoxDecoration(
                                             color: Color(0xFF44adda),
-                                            borderRadius: const BorderRadius.only(
-                                              //   bottomLeft: Radius.circular(20),   // curve bottom left
-                                              bottomRight: Radius.circular(
-                                                20,
-                                              ), // curve bottom right
-                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                  bottomRight: Radius.circular(
+                                                    20,
+                                                  ),
+                                                ),
                                           ),
                                           child: Column(
                                             mainAxisAlignment:

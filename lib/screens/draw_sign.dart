@@ -67,21 +67,12 @@ class _SignatureScreenState extends State<SignatureScreen> {
       setState(() {
         isUploading = true;
       });
-
-      // Convert signature image to base64 string
       String base64Image = base64Encode(exportedImage!);
-
-      // Replace with your API endpoint
       const String apiUrl = "https://yourserver.com/api/upload_signature";
-
-      // Send POST request
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "signature": base64Image,
-          "user_id": "123", // You can pass extra data if needed
-        }),
+        body: jsonEncode({"signature": base64Image, "user_id": "123"}),
       );
 
       setState(() {
@@ -120,10 +111,10 @@ class _SignatureScreenState extends State<SignatureScreen> {
       appBar: AppBar(
         elevation: 0,
         title: Column(
-          crossAxisAlignment: CrossAxisAlignment.center, // align left
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              widget.name.toUpperCase(), // convert to uppercase
+              widget.name.toUpperCase(),
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -147,17 +138,17 @@ class _SignatureScreenState extends State<SignatureScreen> {
             },
             borderRadius: BorderRadius.circular(100),
             child: Container(
-              padding: const EdgeInsets.all(4), // spacing inside the box
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.white, // background color inside the box
-                border: Border.all(color: Colors.grey, width: 1), // grey border
-                borderRadius: BorderRadius.circular(8), // curved corners
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
                 Icons.arrow_back_ios_rounded,
                 size: 17,
                 weight: 5,
-                color: primaryColor, // icon color
+                color: primaryColor,
               ),
             ),
           ),
@@ -168,7 +159,6 @@ class _SignatureScreenState extends State<SignatureScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Signature Canvas
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1),
@@ -184,8 +174,6 @@ class _SignatureScreenState extends State<SignatureScreen> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Buttons Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -193,8 +181,8 @@ class _SignatureScreenState extends State<SignatureScreen> {
                   onPressed: _saveSignature,
                   icon: Icon(Icons.save, color: primaryColor),
                   style: ElevatedButton.styleFrom(
-                    elevation: 0, // removes shadow
-                    shadowColor: Colors.transparent, // ensures no shadow color
+                    elevation: 0,
+                    shadowColor: Colors.transparent,
                   ),
                   label: Text("Save", style: TextStyle(color: primaryColor)),
                 ),
@@ -203,31 +191,26 @@ class _SignatureScreenState extends State<SignatureScreen> {
                   icon: Icon(Icons.clear, color: primaryColor),
                   label: Text("Clear", style: TextStyle(color: primaryColor)),
                   style: ElevatedButton.styleFrom(
-                    elevation: 0, // removes shadow
-                    shadowColor: Colors.transparent, // ensures no shadow color
+                    elevation: 0,
+                    shadowColor: Colors.transparent,
                   ),
-                  //  style: ElevatedButton.styleFrom(ba),
                 ),
                 ElevatedButton.icon(
                   onPressed: isUploading ? null : _uploadSignature,
                   icon: Icon(Icons.cloud_upload, color: primaryColor),
                   style: ElevatedButton.styleFrom(
-                    elevation: 0, // removes shadow
-                    shadowColor: Colors.transparent, // ensures no shadow color
+                    elevation: 0,
+                    shadowColor: Colors.transparent,
                   ),
                   label: isUploading
                       ? const Text("Uploading...")
                       : Text("Upload", style: TextStyle(color: primaryColor)),
-                  // style: ElevatedButton.styleFrom(
-                  //   backgroundColor: Colors.green,
-                  // ),
                 ),
               ],
             ),
 
             const SizedBox(height: 20),
 
-            // Show Exported Signature Image
             if (exportedImage != null) ...[
               const Text(
                 "Your Saved Signature:",

@@ -1,4 +1,3 @@
-/// -------------------- MODELS --------------------
 class District {
   final String id;
   final String districtName;
@@ -44,8 +43,6 @@ class ChartData {
     return ChartData(titles: [], values: []);
   }
 }
-
-// Rename your custom class to avoid conflict
 class LineChartReportData {
   final List<String> xAxis;
   final List<double> yAxis;
@@ -67,7 +64,7 @@ class LineChartReportData {
 class ReportData {
   final ChartData barChart;
   final ChartData pieChart;
-  final LineChartReportData lineChart; // Use the renamed class
+  final LineChartReportData lineChart;
 
   ReportData({
     required this.barChart,

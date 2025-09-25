@@ -82,7 +82,7 @@ class _QRDetailsPageState extends State<QRDetailsPage> {
             msg: data["message"] ?? "Redeemed successfully",
           );
           setState(() => butisLoading = false);
-          Navigator.pop(context, true); // go back after redeem
+          Navigator.pop(context, true);
         } else {
           setState(() => butisLoading = false);
           Fluttertoast.showToast(msg: data["message"] ?? "Redeem failed");

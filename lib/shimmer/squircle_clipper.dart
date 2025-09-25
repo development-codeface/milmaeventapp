@@ -10,7 +10,7 @@ class SquircleClipper extends CustomClipper<Path> {
     final path = Path();
     double w = size.width;
     double h = size.height;
-    double r = radius; // Corner radius
+    double r = radius;
 
     path.moveTo(r, 0);
     path.lineTo(w - r, 0);
