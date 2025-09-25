@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:milma_group/provider/commonviewmodel.dart';
+import 'package:milma_group/screens/livetrack.dart';
+import 'package:milma_group/screens/splash_screen.dart';
+import 'package:milma_group/session/shared_preferences.dart';
+import 'package:provider/provider.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+    await Store.init(); // <-- make sure this initializes before ViewModel
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+    // Ensure shared preferences / session ready
+
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => CommonViewModel(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Milma',
+        theme: ThemeData(
+          fontFamily: 'Figtree',
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: const SplashScreen(),
+      ),
+    );
+  }
+}
