@@ -383,7 +383,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       Expanded(
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: Color(0xFF214bb8),
+                                            color: Color(0xFF214bb9),
 
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -429,7 +429,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       ),
                                       Expanded(
                                         child: Container(
-                                          color: Color(0xFFfe634e),
+                                          color: Color(0xFFe01e05),
 
                                           child: Column(
                                             mainAxisAlignment:
@@ -458,7 +458,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       Expanded(
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: Color(0xFF44adda),
+                                            color: Color(0xFF00a6ee),
                                             borderRadius:
                                                 const BorderRadius.only(
                                                   bottomRight: Radius.circular(

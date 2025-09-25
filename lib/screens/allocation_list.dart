@@ -244,47 +244,52 @@ class _SignatureListPageState extends State<SignatureListPage> {
                             itemCount: filteredInsights.length,
                             itemBuilder: (context, index) {
                               final user = filteredInsights[index];
-                              return Card(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 10,
+                              return InkWell(
+                                onTap: () {
+                                    _onSignaturePressed(user.name ?? "");
+                                },
+                                child: Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  title: Text(
-                                    user.name ?? "Unknown",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                  margin: const EdgeInsets.symmetric(vertical: 6),
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 10,
                                     ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 3),
-                                      Text("Mobile: ${user.mobile ?? 'N/A'}"),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        "Login Time : ${user.loginDate != null ? DateFormat("hh:mm a").format(DateTime.parse(user.loginDate.toString()).toLocal()) : "No Time"}",
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.blueGrey,
-                                        ),
+                                    title: Text(
+                                      user.name ?? "Unknown",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                       ),
-                                    ],
-                                  ),
-                                  trailing: IconButton(
-                                    onPressed: () {
-                                      _onSignaturePressed(user.name ?? "");
-                                    },
-                                    icon: SvgPicture.asset(
-                                      'assets/images/signature-stroke-rounded.svg',
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 3),
+                                        Text("Mobile: ${user.mobile ?? 'N/A'}"),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          "Login Time : ${user.loginDate != null ? DateFormat("hh:mm a").format(DateTime.parse(user.loginDate.toString()).toLocal()) : "No Time"}",
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.blueGrey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        _onSignaturePressed(user.name ?? "");
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'assets/images/signature-stroke-rounded.svg',
+                                      ),
                                     ),
                                   ),
                                 ),

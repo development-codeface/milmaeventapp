@@ -330,7 +330,7 @@ class _LivetrackState extends State<Livetrack> {
               width: 100,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF2b68e8),
+                  backgroundColor: Color(0xFF1c27b8),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -370,8 +370,9 @@ class _LivetrackState extends State<Livetrack> {
                 index,
               ) {
                 final colors = [
-                  Color(0xFF214bb8),
-                  Color(0xFFfe634e),
+                  Color(0xFF214bb9),
+
+                      Color(0xFFe01e05),
                   Color(0xFF33c25b),
                 ];
                 return Padding(
@@ -420,8 +421,9 @@ class _LivetrackState extends State<Livetrack> {
                     entry,
                   ) {
                     final colors = [
-                      Color(0xFF214bb8),
-                      Color(0xFFfe634e),
+                  Color(0xFF214bb9),
+
+                      Color(0xFFe01e05),
                       Color(0xFF33c25b),
                     ];
                     final index = entry.key;
@@ -927,7 +929,9 @@ class _LivetrackState extends State<Livetrack> {
   }
 
   Color _getColorForIndex(int index) {
-    final colors = [Color(0xFFfe634e), Color(0xFF214bb8)];
+        
+    final colors = [Color(0xFFe01e05), Color(0xFF214bb9),
+];
     return colors[index % colors.length];
   }
 
