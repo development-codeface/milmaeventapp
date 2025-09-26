@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final String baseurl = "https://milmasociety.cfdev.in/api/";
+//final String baseurl = "https://milmasociety.cfdev.in/api/";
+final String baseurl = "https://agb.trcmpumilma.com/api/";
+
 final Color primaryColor = Color(0xFF9A221F);
 const Duration refreshInterval = Duration(minutes: 1);
 
