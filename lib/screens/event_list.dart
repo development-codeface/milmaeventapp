@@ -381,25 +381,9 @@ class _EventListScreenState extends State<EventListScreen> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF214bb9),
-
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                  bottomLeft: Radius.circular(
-                                                    20,
-                                                  ),
-                                                ),
-                                          ),
-
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
+                                        child: InkWell(
+                                          onTap: () {
+                                              Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
@@ -408,96 +392,144 @@ class _EventListScreenState extends State<EventListScreen> {
                                                           ),
                                                     ),
                                                   );
-                                                },
-                                                icon: SvgPicture.asset(
-                                                  color: Colors.white,
-                                                  'assets/images/analytics-01-stroke-rounded.svg',
-                                                ),
-                                              ),
-                                              const Text(
-                                                "MEMBERS",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  letterSpacing: 0,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          color: Color(0xFFe01e05),
-
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: _openScanner,
-                                                icon: SvgPicture.asset(
-                                                  color: Colors.white,
-                                                  'assets/images/qr-code-stroke-rounded.svg',
-                                                ),
-                                              ),
-                                              const Text(
-                                                "SCAN",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  letterSpacing: 0,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF00a6ee),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                  bottomRight: Radius.circular(
-                                                    20,
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF214bb9),
+                                          
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                    bottomLeft: Radius.circular(
+                                                      20,
+                                                    ),
+                                                  ),
+                                            ),
+                                          
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SignatureListPage(
+                                                              id: event.id ?? 0,
+                                                            ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: SvgPicture.asset(
+                                                    color: Colors.white,
+                                                    'assets/images/analytics-01-stroke-rounded.svg',
                                                   ),
                                                 ),
+                                                const Text(
+                                                  "MEMBERS",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    letterSpacing: 0,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Livetrack(
-                                                            eventid:
-                                                                event.id ?? 0,
-                                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            _openScanner();
+                                          },
+                                          child: Container(
+                                            color: Color(0xFFe01e05),
+                                          
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: _openScanner,
+                                                  icon: SvgPicture.asset(
+                                                    color: Colors.white,
+                                                    'assets/images/qr-code-stroke-rounded.svg',
+                                                  ),
+                                                ),
+                                                const Text(
+                                                  "SCAN",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    letterSpacing: 0,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                             Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Livetrack(
+                                                              eventid:
+                                                                  event.id ?? 0,
+                                                            ),
+                                                      ),
+                                                    );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF00a6ee),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                    bottomRight: Radius.circular(
+                                                      20,
                                                     ),
-                                                  );
-                                                },
-                                                icon: SvgPicture.asset(
-                                                  color: Colors.white,
-                                                  'assets/images/analysis-text-link-stroke-rounded.svg',
+                                                  ),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Livetrack(
+                                                              eventid:
+                                                                  event.id ?? 0,
+                                                            ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: SvgPicture.asset(
+                                                    color: Colors.white,
+                                                    'assets/images/analysis-text-link-stroke-rounded.svg',
+                                                  ),
                                                 ),
-                                              ),
-                                              const Text(
-                                                "LIVE",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.white,
-                                                  letterSpacing: 0,
-                                                  fontWeight: FontWeight.w600,
+                                                const Text(
+                                                  "LIVE",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.white,
+                                                    letterSpacing: 0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
