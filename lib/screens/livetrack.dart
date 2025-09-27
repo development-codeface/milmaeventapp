@@ -34,7 +34,7 @@ class _LivetrackState extends State<Livetrack> {
   void initState() {
     super.initState();
     _loadInitialData();
-    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+    _timer = Timer.periodic(const Duration(minutes: 30), (timer) {
       _loadReport();
     });
   }
@@ -217,56 +217,60 @@ class _LivetrackState extends State<Livetrack> {
   }
 
   Widget _buildContent() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          _buildFilters(),
-          const SizedBox(height: 20),
-          isLoading
-              ? _buildShimmerLoader()
-              : Text(
-                  'ONBOARDING TREND',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0,
+    return RefreshIndicator(
+      onRefresh: _loadReport,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            _buildFilters(),
+            const SizedBox(height: 20),
+            isLoading
+                ? _buildShimmerLoader()
+                : Text(
+                    'ONBOARDING TREND',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0,
+                    ),
                   ),
-                ),
-          const SizedBox(height: 15),
-          isLoading ? _buildShimmerLoader() : _buildBarChart(),
-          const SizedBox(height: 60),
-          isLoading
-              ? _buildShimmerLoader()
-              : Text(
-                  'SNAPSHOT',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0,
+            const SizedBox(height: 15),
+            isLoading ? _buildShimmerLoader() : _buildBarChart(),
+            const SizedBox(height: 60),
+            isLoading
+                ? _buildShimmerLoader()
+                : Text(
+                    'SNAPSHOT',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0,
+                    ),
                   ),
-                ),
-          const SizedBox(height: 15),
-          isLoading ? _buildShimmerLoader() : _buildPieChart(),
+            const SizedBox(height: 15),
+            isLoading ? _buildShimmerLoader() : _buildPieChart(),
 
-          const SizedBox(height: 60),
-          isLoading
-              ? _buildShimmerLoader()
-              : Text(
-                  'TIMELINE',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0,
+            const SizedBox(height: 60),
+            isLoading
+                ? _buildShimmerLoader()
+                : Text(
+                    'TIMELINE',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0,
+                    ),
                   ),
-                ),
-          const SizedBox(height: 15),
-          isLoading ? _buildShimmerLoader() : _buildLineChart(),
-          const SizedBox(height: 40),
-        ],
+            const SizedBox(height: 15),
+            isLoading ? _buildShimmerLoader() : _buildLineChart(),
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }
@@ -372,7 +376,7 @@ class _LivetrackState extends State<Livetrack> {
                 final colors = [
                   Color(0xFF214bb9),
 
-                      Color(0xFFe01e05),
+                  Color(0xFFe01e05),
                   Color(0xFF33c25b),
                 ];
                 return Padding(
@@ -421,7 +425,7 @@ class _LivetrackState extends State<Livetrack> {
                     entry,
                   ) {
                     final colors = [
-                  Color(0xFF214bb9),
+                      Color(0xFF214bb9),
 
                       Color(0xFFe01e05),
                       Color(0xFF33c25b),
@@ -653,15 +657,18 @@ class _LivetrackState extends State<Livetrack> {
     } else if (rawMaxY <= 100) {
       maxY = 100;
       interval = 10;
-    } else {
+    } else if (rawMaxY <= 150) {
       maxY = 150;
       interval = 10;
+    } else {
+      maxY = 400;
+      interval = 20;
     }
 
-    final chartHeight = 290.0;
-    final chartTopPadding = 8.0;
+    final chartHeight = 340.0;
+    final chartTopPadding = 10.0;
     final dotRadius = 3.0;
-    final tooltipOffset = 8.0;
+    final tooltipOffset = 1.0;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -693,7 +700,7 @@ class _LivetrackState extends State<Livetrack> {
           children: [
             const SizedBox(height: 16),
             SizedBox(
-              height: 350,
+              height: 400,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -830,6 +837,7 @@ class _LivetrackState extends State<Livetrack> {
                                     drawHorizontalLine: true,
                                     drawVerticalLine: true,
                                     show: true,
+                                    horizontalInterval: interval / 2,
                                     getDrawingHorizontalLine: (value) {
                                       if (value % interval == 0) {
                                         return FlLine(
@@ -929,9 +937,7 @@ class _LivetrackState extends State<Livetrack> {
   }
 
   Color _getColorForIndex(int index) {
-        
-    final colors = [Color(0xFFe01e05), Color(0xFF214bb9),
-];
+    final colors = [Color(0xFFe01e05), Color(0xFF214bb9)];
     return colors[index % colors.length];
   }
 
